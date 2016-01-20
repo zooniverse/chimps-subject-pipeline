@@ -1,0 +1,16 @@
+#!/bin/bash
+yum update -y
+yum install -y ruby-devel
+yum install -y gcc
+
+mkdir /usr/local/bin/ffmpeg
+curl http://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz -o /tmp/ffmpeg-git-64bit-static.tar.xz
+tar -xf /tmp/ffmpeg-git-64bit-static.tar.xz -C /usr/local/bin/ffmpeg --strip-components=1
+
+ln -s /usr/local/bin/ffmpeg/ffmpeg /usr/bin/ffmpeg
+ln -s /usr/local/bin/ffmpeg/ffprobe /usr/bin/ffprobe
+
+gem install aws-sdk
+gem install bson
+gem install mimemagic
+gem install mysql2
