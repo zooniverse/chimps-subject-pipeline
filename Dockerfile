@@ -12,3 +12,7 @@ RUN curl http://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz \
 RUN gem install aws-sdk bson mimemagic mysql2
 
 ADD . /opt/chimps/
+
+WORKDIR /opt/chimps/
+
+ENTRYPOINT [ "/usr/bin/ruby" ]
