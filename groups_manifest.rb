@@ -38,14 +38,7 @@ mysql = Mysql2::Client.new(
 )
 
 groups = Dir["#{ config['input_path'] }/*"].select { |path|
-  # This is brittle.
-  if !File.directory? path
-    false
-  elsif (%w($) & path.chars).length > 0
-    false
-  else
-    true
-  end
+  File.directory? path
 }
 
 groups.each.with_index do |group, index|
