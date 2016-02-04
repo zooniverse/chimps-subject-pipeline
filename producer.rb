@@ -20,7 +20,7 @@ mysql = Mysql2::Client.new(
   database: config['mysql']['database']
 )
 
-results = mysql.query("SELECT s.* FROM subjects_manifest s INNER JOIN groups_manifest g ON s.group_bson_id = g.bson_id WHERE g.drive = 3", stream: true)
+results = mysql.query("SELECT s.* FROM subjects_manifest s INNER JOIN groups_manifest g ON s.group_bson_id = g.bson_id WHERE g.drive = 4", stream: true)
 results.each do |result|
   sqs.send_message(
     queue_url: 'https://sqs.us-east-1.amazonaws.com/927935712646/chimps-data-processing',
