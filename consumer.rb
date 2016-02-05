@@ -11,7 +11,7 @@ def close_streams(*args)
 end
 
 def mime_type(path)
-  ext = File.extname(path) 
+  ext = File.extname(path)
   case ext
   when ".avi"
     "video/x-msvideo"

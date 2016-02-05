@@ -10,6 +10,7 @@ RUN curl http://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz \
             \*/ffprobe \*/ffmpeg
 
 RUN gem install aws aws-sdk bson mimemagic mysql2 connection_pool
+RUN pip install awscli
 
 ADD . /opt/chimps/
 
