@@ -23,7 +23,7 @@ sites = ARGV
 sites.each do |site|
   puts "Creating manifest for #{ site }"
 
-  subjects_manifest_file = File.open "/media/zooraid/project-data/chimps/#{ site }_subjects.txt", 'w'
+  subjects_manifest_file = File.open "/data/#{ site }_subjects.txt", 'w'
 
   results = mysql.query <<-SQL
     SELECT s.*, g.site_name, g.fake_name, g.drive
@@ -38,7 +38,7 @@ sites.each do |site|
     counter += 1
 
     if counter == 1
-      groups_manifest_file = File.open "/media/zooraid/project-data/chimps/#{ site }_group.txt", 'w'
+      groups_manifest_file = File.open "/data/#{ site }_group.txt", 'w'
       group = {
         id: row['group_bson_id'],
         name: row['fake_name'],
