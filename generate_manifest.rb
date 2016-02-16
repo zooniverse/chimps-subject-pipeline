@@ -40,11 +40,11 @@ sites.each do |site|
     if counter == 1
       groups_manifest_file = File.open "/data/#{ site }_group.txt", 'w'
       group = {
-        id: row['group_bson_id'],
+        _id: row['group_bson_id'],
         name: row['fake_name'],
         metadata: {
           site: row['site_name'],
-          fake_name: row['fake_name'] 
+          fake_name: row['fake_name']
         }
       }
       groups_manifest_file.puts JSON.dump(group)
@@ -54,7 +54,7 @@ sites.each do |site|
 
     # the previews part here is silly
     subject = {
-      id: bson_id,
+      _id: bson_id,
       group_id: row['group_bson_id'],
       location: {
         standard: {
