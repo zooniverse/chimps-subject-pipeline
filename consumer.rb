@@ -94,17 +94,22 @@ poller.poll(max_number_of_messages: config['concurrency']) do |messages|
       subject_output_path = File.join config['output']['local_path'], bson_id
       `mkdir -p #{ subject_output_path }/previews`
 
+      success = true
       # h264
       cmd = "ffmpeg -nostdin -ss #{ start_time } -i '#{ source_file }' -y -to #{ duration } -c:v libx264 -preset medium -crf 23 -vf scale=\"720:trunc(ow/a/2)*2\" -r 24 -pix_fmt yuv420p -threads 0 -c:a libmp3lame -q:a 6 '#{ subject_output_path }/#{ bson_id }.mp4'"
-      system cmd, [:out, :err] => '/dev/null'
+      success &= system cmd, [:out, :err] => '/dev/null'
 
       # webm
       cmd = "ffmpeg -nostdin -ss #{ start_time } -i '#{ source_file }' -y -to #{ duration } -c:v libvpx -b:v 500k -crf 30 -vf scale=\"720:trunc(ow/a/2)*2\" -r 24 -pix_fmt yuv420p -threads 0 -c:a libvorbis '#{ subject_output_path }/#{ bson_id }.webm'"
-      system cmd, [:out, :err] => '/dev/null'
+      success &= system cmd, [:out, :err] => '/dev/null'
 
       (0..subject['duration']).each do |second|
         cmd = "ffmpeg -nostdin -ss #{ start_time + second } -i \"#{ source_file }\" -y -r 1 -to 1 #{subject_output_path }/previews/#{ bson_id }_#{ second }.jpg"
-        system cmd, [:out, :err] => '/dev/null'
+        success &= system cmd, [:out, :err] => '/dev/null'
+      end
+
+      if not success
+        raise "Encoding failed"
       end
 
       # Upload to S3
