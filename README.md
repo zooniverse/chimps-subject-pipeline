@@ -36,6 +36,13 @@ to it's eventual location that will be referenced on the subject.
 ## Process
 Loosely:
 
+```
+docker run -it --rm -v /path/to/data/:/data/ -v $PWD/config.yml:/opt/chimps/config.yml zooniverse/chimps-subject-pipeline groups_manifest.rb
+docker run -it --rm -v /path/to/data/:/data/ -v $PWD/config.yml:/opt/chimps/config.yml zooniverse/chimps-subject-pipeline subjects_manifest.rb
+docker run -it --rm -v /path/to/data/:/data/ -v $PWD/config.yml:/opt/chimps/config.yml zooniverse/chimps-subject-pipeline producer.rb
+docker run -it --rm -v /path/to/data/:/data/ -v $PWD/config.yml:/opt/chimps/config.yml zooniverse/chimps-subject-pipeline generate_manifest.rb Folder_1 Folder_2 ...
+```
+
 - Upload hard drive data to S3
 - Run subjects_manfiest.rb and groups_manfiest.rb against the hard drive.
 - Fire up as many instances as is appropriate for the data volume, using the
