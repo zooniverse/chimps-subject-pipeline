@@ -39,7 +39,7 @@ Loosely:
 ```
 docker run -it --rm -v /path/to/data/:/data/ -v $PWD/config.yml:/opt/chimps/config.yml zooniverse/chimps-subject-pipeline groups_manifest.rb
 docker run -it --rm -v /path/to/data/:/data/ -v $PWD/config.yml:/opt/chimps/config.yml zooniverse/chimps-subject-pipeline subjects_manifest.rb
-docker run -it --rm -v /path/to/data/:/data/ -v $PWD/config.yml:/opt/chimps/config.yml zooniverse/chimps-subject-pipeline producer.rb
+docker run -it --rm -v /path/to/data/:/data/ -v $PWD/config.yml:/opt/chimps/config.yml zooniverse/chimps-subject-pipeline producer.rb Folder_1 Folder_2 ...
 docker run -it --rm -v /path/to/data/:/data/ -v $PWD/config.yml:/opt/chimps/config.yml zooniverse/chimps-subject-pipeline generate_manifest.rb Folder_1 Folder_2 ...
 ```
 

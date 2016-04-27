@@ -5,6 +5,11 @@ require 'open3'
 require 'shellwords'
 require 'yaml'
 
+unless ARGV[0]
+  puts "Must provide at least one site to work on."
+  exit
+end
+
 config = YAML.load_file File.join Dir.pwd, 'config.yml'
 
 Aws.config.update({
@@ -20,10 +25,14 @@ mysql = Mysql2::Client.new(
   database: config['mysql']['database']
 )
 
-results = mysql.query("SELECT s.* FROM subjects_manifest s INNER JOIN groups_manifest g ON s.group_bson_id = g.bson_id WHERE g.drive = 4", stream: true)
-results.each do |result|
-  sqs.send_message(
-    queue_url: 'https://sqs.us-east-1.amazonaws.com/927935712646/chimps-data-processing',
-    message_body: Base64.encode64(result.to_json)
-  )
+sites = ARGV
+sites.each do |site|
+  site_escaped = mysql.escape(site)
+  results = mysql.query("SELECT s.* FROM subjects_manifest s INNER JOIN groups_manifest g ON s.group_bson_id = g.bson_id WHERE g.site_name = '#{site_escaped}'", stream: true)
+  results.each do |result|
+    sqs.send_message(
+      queue_url: 'https://sqs.us-east-1.amazonaws.com/927935712646/chimps-data-processing',
+      message_body: Base64.encode64(result.to_json)
+    )
+  end
 end
