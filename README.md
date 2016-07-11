@@ -54,8 +54,7 @@ docker run -it --rm -v /path/to/data/:/data/ -v $PWD/config.yml:/opt/chimps/conf
 - Asynchronously to all this, run generate_manifest.rb to produce a text file
   for easy iteration over to ingest into Ouroboros.
 - Create subjects in Ouroboros.
-- ...
-- Profit!
+- Update list of groups in [summary.cjsx](https://github.com/zooniverse/chimpandsee/blob/master/app/annotation/summary.cjsx)
 
 ## Other Notes
 - Uploading is done asynchronously to the above process. Use whatever tool you
